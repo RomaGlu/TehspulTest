@@ -9,19 +9,23 @@
 /* Begin PBXBuildFile section */
 		4EDACB8C2B435EFB0036384C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACB8B2B435EFB0036384C /* AppDelegate.swift */; };
 		4EDACB8E2B435EFB0036384C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACB8D2B435EFB0036384C /* SceneDelegate.swift */; };
-		4EDACB902B435EFB0036384C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACB8F2B435EFB0036384C /* ViewController.swift */; };
+		4EDACB902B435EFB0036384C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACB8F2B435EFB0036384C /* OnboardingViewController.swift */; };
 		4EDACB952B435EFD0036384C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EDACB942B435EFD0036384C /* Assets.xcassets */; };
 		4EDACB982B435EFD0036384C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EDACB962B435EFD0036384C /* LaunchScreen.storyboard */; };
+		4EDACBA52B4362070036384C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACBA42B4362070036384C /* OnboardingView.swift */; };
+		4EDACBA82B4362460036384C /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACBA72B4362460036384C /* OnboardingModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4EDACB882B435EFB0036384C /* TehspulTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TehspulTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EDACB8B2B435EFB0036384C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EDACB8D2B435EFB0036384C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4EDACB8F2B435EFB0036384C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4EDACB8F2B435EFB0036384C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		4EDACB942B435EFD0036384C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EDACB972B435EFD0036384C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4EDACB992B435EFD0036384C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4EDACBA42B4362070036384C /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		4EDACBA72B4362460036384C /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				4EDACBA12B435FB50036384C /* App */,
-				4EDACB8F2B435EFB0036384C /* ViewController.swift */,
+				4EDACBA22B4361E30036384C /* ViewController */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -82,10 +86,36 @@
 		4EDACBA12B435FB50036384C /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4EDACBA62B4362330036384C /* Model */,
+				4EDACBA32B4361F00036384C /* View */,
 				4EDACB8B2B435EFB0036384C /* AppDelegate.swift */,
 				4EDACB8D2B435EFB0036384C /* SceneDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		4EDACBA22B4361E30036384C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4EDACB8F2B435EFB0036384C /* OnboardingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4EDACBA32B4361F00036384C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4EDACBA42B4362070036384C /* OnboardingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4EDACBA62B4362330036384C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4EDACBA72B4362460036384C /* OnboardingModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,7 +188,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EDACB902B435EFB0036384C /* ViewController.swift in Sources */,
+				4EDACB902B435EFB0036384C /* OnboardingViewController.swift in Sources */,
+				4EDACBA82B4362460036384C /* OnboardingModel.swift in Sources */,
+				4EDACBA52B4362070036384C /* OnboardingView.swift in Sources */,
 				4EDACB8C2B435EFB0036384C /* AppDelegate.swift in Sources */,
 				4EDACB8E2B435EFB0036384C /* SceneDelegate.swift in Sources */,
 			);
