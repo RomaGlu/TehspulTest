@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+struct ImagesModel {
+    let image: String?
+}
+
+extension ImagesModel {
+    static let imagesArray: [ImagesModel] = [
+        ImagesModel(image: "image1"),
+        ImagesModel(image: "image2"),
+        ImagesModel(image: "image3")
+    ]
+}
