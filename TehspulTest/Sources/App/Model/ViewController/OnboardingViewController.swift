@@ -8,10 +8,22 @@
 import UIKit
 
 class OnboardingViewController: UIViewController {
+    
+    //MARK: Properties
+    
+    let onboardingView = OnboardingView()
+    
 
+    override func loadView() {
+        super.loadView()
+        view = onboardingView
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .cyan
+        
     }
 
 

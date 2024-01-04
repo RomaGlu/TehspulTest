@@ -7,14 +7,16 @@
 
 import Foundation
 
-struct ImagesModel {
+struct OnboardingModel: Hashable {
     let image: String?
+    let description: String?
+    let actionLabel: String?
 }
 
-extension ImagesModel {
-    static let imagesArray: [ImagesModel] = [
-        ImagesModel(image: "image1"),
-        ImagesModel(image: "image2"),
-        ImagesModel(image: "image3")
+extension OnboardingModel {
+    static let onboardingArray: [OnboardingModel] = [
+        OnboardingModel(image: "image1", description: "Ordina a domicilio senza limiti di distanza. Non è magia, è Moovenda!", actionLabel: "PRONTO?"),
+        OnboardingModel(image: "image2", description: "Ogni tanto inviamo degli sconti esclusivi tramite notifiche push, ci stai?", actionLabel: "PROMOZIONI"),
+        OnboardingModel(image: "image3", description: "Per sfruttare al massimo l'app, puoi condividerci la tua posizione?", actionLabel: "POSIZIONE")
     ]
 }

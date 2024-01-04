@@ -6,10 +6,40 @@
 //
 
 import UIKit
+import SnapKit
 
 class OnboardingView: UIView {
     
     //MARK: Properties
+    private var stack = Stack<CardView>()
+    var cardData: [OnboardingModel] = OnboardingModel.onboardingArray
+    var cardViews: [CardView]?
+    
+    var originalBigCenterX: NSLayoutConstraint!
+    var originalBigCenterY: NSLayoutConstraint!
+    var originalMediumCenterX: NSLayoutConstraint!
+    var originalMediumCenterY: NSLayoutConstraint!
+    var originalSmallCenterX: NSLayoutConstraint!
+    var originalSmallCenterY: NSLayoutConstraint!
+    
+    var bigLeftAnchor: NSLayoutConstraint!
+    var bigRightAnchor: NSLayoutConstraint!
+    var bigHeightAnchor: NSLayoutConstraint!
+    
+    
+    var mediumLeftAnchor: NSLayoutConstraint!
+    var mediumRightAnchor: NSLayoutConstraint!
+    var mediumHeightAnchor: NSLayoutConstraint!
+    
+    var smallLeftAnchor: NSLayoutConstraint!
+    var smallRightAnchor: NSLayoutConstraint!
+    var smallHeightAnchor: NSLayoutConstraint!
+    
+    //MARK: Views
+    
+    var frontView: UIView?
+    var subFrontView: UIView?
+    var backView: UIView?
     
     //MARK: Outlets
     
@@ -17,34 +47,20 @@ class OnboardingView: UIView {
         let button = UIButton(type: .system)
         return button
     }()
-    
-    private lazy var bottomView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private lazy var middleView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private lazy var frontView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private lazy var frontImageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
+
+    // перевод кнопок: inizia = старт, pronto = готов,  rifiuta = мусор? , accetta = принимать
+    // promozioni = акции, posizione = позиция? ,
     
     private lazy var buttonsView: UIView = {
         let view = UIView()
+        view.gradientOfView(withColours: [UIColor.orange, UIColor.yellow])
         return view
     }()
     
-    // перевод кнопок: inizia = старт, pronto = готов,  rifiuta = мусор? , accetta = принимать
-    // promozioni = акции, posizione = позиция? ,
+    private lazy var viewForConstraints: UIView = {
+        let view = UIView()
+        return view
+    }()
     
     private lazy var furtherButton: UIButton = {
         let button = UIButton(type: .system)
@@ -61,6 +77,11 @@ class OnboardingView: UIView {
     
     override init(frame: CGRect) {
         super .init(frame: frame)
+//        cardViews = getCards(model: cardData)
+        configureViews()
+        setupView()
+        setupHierarchy()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -70,24 +91,168 @@ class OnboardingView: UIView {
     //MARK: Layout
     
     private func setupView() {
-        makeHidden(view: [bottomView, furtherButton])
+        let gradientLayer:CAGradientLayer = CAGradientLayer()
+         gradientLayer.frame.size = self.buttonsView.frame.size
+         gradientLayer.colors =
+         [UIColor.white.cgColor,UIColor.red.withAlphaComponent(1).cgColor]
+         //Use diffrent colors
+         buttonsView.layer.addSublayer(gradientLayer)
     }
     
     private func setupHierarchy() {
-        addSubviews(view: [showOnboardingButton,
-                           bottomView,
-                           middleView,
-                           frontView,
-                           
-                           frontImageView,
-                           
-                           buttonsView,
-                           furtherButton,
-                           closeButton
-                          ])
+        addSubviews(view: [buttonsView])
+        stack.storage.forEach { addSubview($0) }
+        
+        //        addSubviews(view: getCards(model: cardData))
+//        if let cardViews = cardViews {
+//            addSubviews(view: cardViews)
+//        }
+        
+        //        addSubviews(view: [bottomView, middleView, frontView])
     }
     
     private func setupLayout() {
+        
+        NSLayoutConstraint.activate([
+            buttonsView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            buttonsView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            buttonsView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            buttonsView.heightAnchor.constraint(equalToConstant: 96)
+        
+        ])
+        
+        for innView in stack.storage {
+            if innView == stack.storage.last {
+                frontView = innView
+                guard let frontView else { return }
+                let swipe = UIPanGestureRecognizer(target: self, action: #selector(swipeHandle))
+                frontView.addGestureRecognizer(swipe)
+                
+                originalBigCenterX = frontView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+                originalBigCenterY = frontView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+                bigLeftAnchor = frontView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 24)
+                bigRightAnchor = frontView.leftAnchor.constraint(equalTo: self.rightAnchor, constant: -24)
+                bigHeightAnchor = frontView.heightAnchor.constraint(equalToConstant: 480)
+                NSLayoutConstraint.activate([
+                    originalBigCenterX,
+                    originalBigCenterY,
+                    bigLeftAnchor,
+                    bigRightAnchor,
+                    bigHeightAnchor
+                ])
+            } else if innView == stack.storage[stack.storage.count - 2] {
+                subFrontView = innView
+                guard let subFrontView else { return }
+                originalMediumCenterX = subFrontView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+                originalMediumCenterY = subFrontView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 15)
+                mediumLeftAnchor = subFrontView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 32)
+                mediumRightAnchor = subFrontView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -32)
+                mediumHeightAnchor = subFrontView.heightAnchor.constraint(equalToConstant: 480)
+                NSLayoutConstraint.activate([
+                    originalMediumCenterX,
+                    originalMediumCenterY,
+                    mediumLeftAnchor,
+                    mediumRightAnchor,
+                    mediumHeightAnchor
+                ])
+            } else {
+                backView = innView
+                guard let backView else { return }
+                originalSmallCenterX = backView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+                originalSmallCenterY = backView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 25)
+                smallLeftAnchor = backView.leftAnchor.constraint(equalTo: self.rightAnchor, constant: 40)
+                smallRightAnchor = backView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -40)
+                smallHeightAnchor = backView.heightAnchor.constraint(equalToConstant: 480)
+                NSLayoutConstraint.activate([
+                    originalSmallCenterX,
+                    originalSmallCenterY,
+                    smallLeftAnchor,
+                    smallRightAnchor,
+                    smallHeightAnchor
+                ])
+            }
+        }
+    }
+    
+    private func configureViews() {
+        print(UIFont.familyNames)
+            cardData.reversed().forEach { data in
+                stack.push(createView(with: data))
+                if let cardView = cardViews {
+                    for card in cardView {
+                        card.cardData = data
+                    }
+                }
+            }
+        }
+    
+    private func createView(with data: OnboardingModel) -> CardView {
+        let view = CardView()
+        view.cardData = data
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }
+    
+    private func deactivateConstraints() {
+        originalBigCenterX.isActive = false
+        originalBigCenterY.isActive = false
+        originalMediumCenterX.isActive = false
+        originalMediumCenterY.isActive = false
+        originalSmallCenterX.isActive = false
+        originalSmallCenterY.isActive = false
+        
+        bigLeftAnchor.isActive = false
+        bigRightAnchor.isActive = false
+        mediumLeftAnchor.isActive = false
+        mediumRightAnchor.isActive = false
+        smallLeftAnchor.isActive = false
+        smallRightAnchor.isActive = false
+    }
+    
+    
+    @objc private func swipeHandle(_ gesture: UIPanGestureRecognizer) {
+        guard let frontView = self.frontView else { return }
+        guard let view = gesture.view else { return }
+        
+        let translation = gesture.translation(in: view)
+        
+        switch gesture.state {
+        case .began:
+            if translation.x < 0 {
+                let newX = originalBigCenterX.constant + translation.x
+                frontView.center.x = newX
+            }
+        case .changed:
+            if translation.x < 0 {
+                let newX = originalBigCenterX.constant + translation.x
+                frontView.center.x = newX
+            }
+        case .ended:
+            if translation.x < -50 {
+                UIView.animate(withDuration: 0.1, animations: {
+                    guard let frontView = self.frontView else { return }
+                    frontView.center.x = -(frontView.frame.width / 2)
+                }) { _ in
+                    frontView.removeFromSuperview()
+                    self.stack.pop()
+                    self.deactivateConstraints()
+                    self.setupLayout()
+                    
+                }
+            } else {
+                UIView.animate(withDuration: 0.1) {
+                    frontView.center.x = self.center.x
+                }
+            }
+        default:
+            break
+        }
+    }
+    
+    
+    func getCards(model: [OnboardingModel]) -> [CardView] {
+        model.map { CardView(cardData: $0) }
         
     }
 }

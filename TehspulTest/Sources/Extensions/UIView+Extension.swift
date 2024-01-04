@@ -20,4 +20,20 @@ extension UIView {
             $0.isHidden = false
         }
     }
+    
+    func gradientOfView(withColours: [UIColor]) {
+
+        var cgColours = [CGColor]()
+
+        for colour in withColours {
+            cgColours.append(colour.cgColor)
+        }
+        
+        let grad = CAGradientLayer()
+        grad.frame = self.bounds
+        grad.colors = cgColours
+        self.layer.insertSublayer(grad, at: 0)
+    }
+    
+    
 }

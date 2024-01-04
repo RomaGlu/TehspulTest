@@ -15,6 +15,10 @@
 		4EDACBA52B4362070036384C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACBA42B4362070036384C /* OnboardingView.swift */; };
 		4EDACBA82B4362460036384C /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACBA72B4362460036384C /* OnboardingModel.swift */; };
 		4EDACBAF2B4391F00036384C /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACBAE2B4391F00036384C /* UIView+Extension.swift */; };
+		4EDACBB22B456B450036384C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4EDACBB12B456B450036384C /* SnapKit */; };
+		4EDACBB42B456F2D0036384C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACBB32B456F2D0036384C /* CardView.swift */; };
+		4EDACBB62B46E2D30036384C /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACBB52B46E2D30036384C /* Stack.swift */; };
+		4EDACBB92B4720440036384C /* JosefinSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EDACBB82B4720440036384C /* JosefinSans-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,9 @@
 		4EDACBA42B4362070036384C /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		4EDACBA72B4362460036384C /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4EDACBAE2B4391F00036384C /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		4EDACBB32B456F2D0036384C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		4EDACBB52B46E2D30036384C /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		4EDACBB82B4720440036384C /* JosefinSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "JosefinSans-Medium.ttf"; path = "../../../../../../../Downloads/Josefin_Sans/static/JosefinSans-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EDACBB22B456B450036384C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +86,7 @@
 		4EDACBA02B435FAC0036384C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4EDACBB72B47202A0036384C /* Fonts */,
 				4EDACB942B435EFD0036384C /* Assets.xcassets */,
 				4EDACB962B435EFD0036384C /* LaunchScreen.storyboard */,
 				4EDACB992B435EFD0036384C /* Info.plist */,
@@ -107,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				4EDACBA42B4362070036384C /* OnboardingView.swift */,
+				4EDACBB32B456F2D0036384C /* CardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -125,6 +135,7 @@
 				4EDACBA22B4361E30036384C /* ViewController */,
 				4EDACBA32B4361F00036384C /* View */,
 				4EDACBA62B4362330036384C /* Model */,
+				4EDACBB52B46E2D30036384C /* Stack.swift */,
 			);
 			name = OnboardingScene;
 			path = Model;
@@ -136,6 +147,14 @@
 				4EDACBAE2B4391F00036384C /* UIView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4EDACBB72B47202A0036384C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4EDACBB82B4720440036384C /* JosefinSans-Medium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +173,9 @@
 			dependencies = (
 			);
 			name = TehspulTest;
+			packageProductDependencies = (
+				4EDACBB12B456B450036384C /* SnapKit */,
+			);
 			productName = TehspulTest;
 			productReference = 4EDACB882B435EFB0036384C /* TehspulTest.app */;
 			productType = "com.apple.product-type.application";
@@ -182,6 +204,9 @@
 				Base,
 			);
 			mainGroup = 4EDACB7F2B435EFB0036384C;
+			packageReferences = (
+				4EDACBB02B456B450036384C /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 4EDACB892B435EFB0036384C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -198,6 +223,7 @@
 			files = (
 				4EDACB982B435EFD0036384C /* LaunchScreen.storyboard in Resources */,
 				4EDACB952B435EFD0036384C /* Assets.xcassets in Resources */,
+				4EDACBB92B4720440036384C /* JosefinSans-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,9 +234,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EDACBB42B456F2D0036384C /* CardView.swift in Sources */,
 				4EDACBAF2B4391F00036384C /* UIView+Extension.swift in Sources */,
 				4EDACB902B435EFB0036384C /* OnboardingViewController.swift in Sources */,
 				4EDACBA82B4362460036384C /* OnboardingModel.swift in Sources */,
+				4EDACBB62B46E2D30036384C /* Stack.swift in Sources */,
 				4EDACBA52B4362070036384C /* OnboardingView.swift in Sources */,
 				4EDACB8C2B435EFB0036384C /* AppDelegate.swift in Sources */,
 				4EDACB8E2B435EFB0036384C /* SceneDelegate.swift in Sources */,
@@ -434,6 +462,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4EDACBB02B456B450036384C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4EDACBB12B456B450036384C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4EDACBB02B456B450036384C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4EDACB802B435EFB0036384C /* Project object */;
 }
