@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E1976F92B484A8900B0C85C /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1976F82B484A8900B0C85C /* StartViewController.swift */; };
 		4EDACB8C2B435EFB0036384C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACB8B2B435EFB0036384C /* AppDelegate.swift */; };
 		4EDACB8E2B435EFB0036384C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACB8D2B435EFB0036384C /* SceneDelegate.swift */; };
 		4EDACB902B435EFB0036384C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDACB8F2B435EFB0036384C /* OnboardingViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E1976F82B484A8900B0C85C /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		4EDACB882B435EFB0036384C /* TehspulTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TehspulTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EDACB8B2B435EFB0036384C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EDACB8D2B435EFB0036384C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E1976F72B484A7000B0C85C /* StartScene */ = {
+			isa = PBXGroup;
+			children = (
+				4E1976F82B484A8900B0C85C /* StartViewController.swift */,
+			);
+			path = StartScene;
+			sourceTree = "<group>";
+		};
 		4EDACB7F2B435EFB0036384C = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +107,7 @@
 		4EDACBA12B435FB50036384C /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4E1976F72B484A7000B0C85C /* StartScene */,
 				4EDACBA92B438F6B0036384C /* OnboardingScene */,
 				4EDACB8B2B435EFB0036384C /* AppDelegate.swift */,
 				4EDACB8D2B435EFB0036384C /* SceneDelegate.swift */,
@@ -239,6 +250,7 @@
 				4EDACB902B435EFB0036384C /* OnboardingViewController.swift in Sources */,
 				4EDACBA82B4362460036384C /* OnboardingModel.swift in Sources */,
 				4EDACBB62B46E2D30036384C /* Stack.swift in Sources */,
+				4E1976F92B484A8900B0C85C /* StartViewController.swift in Sources */,
 				4EDACBA52B4362070036384C /* OnboardingView.swift in Sources */,
 				4EDACB8C2B435EFB0036384C /* AppDelegate.swift in Sources */,
 				4EDACB8E2B435EFB0036384C /* SceneDelegate.swift in Sources */,

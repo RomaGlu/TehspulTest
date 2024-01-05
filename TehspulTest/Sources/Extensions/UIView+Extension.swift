@@ -17,7 +17,7 @@ extension UIView {
     
     func makeHidden(view: [UIView]) {
         view.forEach {
-            $0.isHidden = false
+            $0.isHidden = true
         }
     }
     
@@ -29,11 +29,11 @@ extension UIView {
             cgColours.append(colour.cgColor)
         }
         
-        let grad = CAGradientLayer()
-        grad.frame = self.bounds
-        grad.colors = cgColours
-        self.layer.insertSublayer(grad, at: 0)
+        let gradient = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = cgColours
+        self.layer.insertSublayer(gradient, at: 0)
+        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
     }
-    
-    
 }

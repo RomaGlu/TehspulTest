@@ -11,9 +11,11 @@ import SnapKit
 class OnboardingView: UIView {
     
     //MARK: Properties
-    private var stack = Stack<CardView>()
+    
+    var stack = Stack<CardView>()
     var cardData: [OnboardingModel] = OnboardingModel.onboardingArray
     var cardViews: [CardView]?
+    var onLastCard: (() -> Void)?
     
     var originalBigCenterX: NSLayoutConstraint!
     var originalBigCenterY: NSLayoutConstraint!
@@ -43,43 +45,35 @@ class OnboardingView: UIView {
     
     //MARK: Outlets
     
-    private lazy var showOnboardingButton: UIButton = {
-        let button = UIButton(type: .system)
-        return button
-    }()
-
-    // перевод кнопок: inizia = старт, pronto = готов,  rifiuta = мусор? , accetta = принимать
-    // promozioni = акции, posizione = позиция? ,
-    
-    private lazy var buttonsView: UIView = {
-        let view = UIView()
-        view.gradientOfView(withColours: [UIColor.orange, UIColor.yellow])
-        return view
-    }()
-    
-    private lazy var viewForConstraints: UIView = {
+    lazy var buttonsView: UIView = {
         let view = UIView()
         return view
     }()
     
-    private lazy var furtherButton: UIButton = {
+    lazy var iniziaButton: UIButton = {
         let button = UIButton(type: .system)
+        button.setTitle("INIZIA", for: .normal)
+        button.titleLabel?.font = UIFont(name: "JosefinSans-Medium", size: 16)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(iniziaButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    private lazy var closeButton: UIButton = {
+    private lazy var rifiutaButton: UIButton = {
         let button = UIButton(type: .system)
+        button.setTitle("RIFIUTA", for: .normal)
+        button.titleLabel?.font = UIFont(name: "JosefinSans-Medium", size: 16)
+        button.setTitleColor(.systemGray6, for: .normal)
+        button.isHidden = true
         return button
     }()
-    
     
     //MARK: Initializators
     
     override init(frame: CGRect) {
         super .init(frame: frame)
-//        cardViews = getCards(model: cardData)
-        configureViews()
         setupView()
+        configureViews()
         setupHierarchy()
         setupLayout()
     }
@@ -91,34 +85,33 @@ class OnboardingView: UIView {
     //MARK: Layout
     
     private func setupView() {
-        let gradientLayer:CAGradientLayer = CAGradientLayer()
-         gradientLayer.frame.size = self.buttonsView.frame.size
-         gradientLayer.colors =
-         [UIColor.white.cgColor,UIColor.red.withAlphaComponent(1).cgColor]
-         //Use diffrent colors
-         buttonsView.layer.addSublayer(gradientLayer)
+        backgroundColor = .systemGray6
     }
     
     private func setupHierarchy() {
-        addSubviews(view: [buttonsView])
+        addSubviews(view: [ buttonsView, iniziaButton, rifiutaButton ])
         stack.storage.forEach { addSubview($0) }
-        
-        //        addSubviews(view: getCards(model: cardData))
-//        if let cardViews = cardViews {
-//            addSubviews(view: cardViews)
-//        }
-        
-        //        addSubviews(view: [bottomView, middleView, frontView])
     }
     
     private func setupLayout() {
         
         NSLayoutConstraint.activate([
+            
             buttonsView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             buttonsView.leftAnchor.constraint(equalTo: self.leftAnchor),
             buttonsView.rightAnchor.constraint(equalTo: self.rightAnchor),
-            buttonsView.heightAnchor.constraint(equalToConstant: 96)
-        
+            buttonsView.heightAnchor.constraint(equalToConstant: 96),
+            
+            iniziaButton.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor),
+            iniziaButton.widthAnchor.constraint(equalToConstant: 80),
+            iniziaButton.rightAnchor.constraint(equalTo: buttonsView.rightAnchor, constant: -24),
+            iniziaButton.heightAnchor.constraint(equalToConstant: 16),
+            
+            rifiutaButton.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor),
+            rifiutaButton.widthAnchor.constraint(equalToConstant: 70),
+            rifiutaButton.leftAnchor.constraint(equalTo: buttonsView.leftAnchor, constant: 24),
+            rifiutaButton.heightAnchor.constraint(equalToConstant: 16),
+            
         ])
         
         for innView in stack.storage {
@@ -130,8 +123,10 @@ class OnboardingView: UIView {
                 
                 originalBigCenterX = frontView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
                 originalBigCenterY = frontView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-                bigLeftAnchor = frontView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 24)
-                bigRightAnchor = frontView.leftAnchor.constraint(equalTo: self.rightAnchor, constant: -24)
+                bigLeftAnchor = frontView.leftAnchor.constraint(equalTo: self.leftAnchor,
+                                                                constant: 24)
+                bigRightAnchor = frontView.leftAnchor.constraint(equalTo: self.rightAnchor,
+                                                                 constant: -24)
                 bigHeightAnchor = frontView.heightAnchor.constraint(equalToConstant: 480)
                 NSLayoutConstraint.activate([
                     originalBigCenterX,
@@ -145,8 +140,10 @@ class OnboardingView: UIView {
                 guard let subFrontView else { return }
                 originalMediumCenterX = subFrontView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
                 originalMediumCenterY = subFrontView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 15)
-                mediumLeftAnchor = subFrontView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 32)
-                mediumRightAnchor = subFrontView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -32)
+                mediumLeftAnchor = subFrontView.leftAnchor.constraint(equalTo: self.leftAnchor,
+                                                                      constant: 32)
+                mediumRightAnchor = subFrontView.rightAnchor.constraint(equalTo: self.rightAnchor,
+                                                                        constant: -32)
                 mediumHeightAnchor = subFrontView.heightAnchor.constraint(equalToConstant: 480)
                 NSLayoutConstraint.activate([
                     originalMediumCenterX,
@@ -159,9 +156,12 @@ class OnboardingView: UIView {
                 backView = innView
                 guard let backView else { return }
                 originalSmallCenterX = backView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-                originalSmallCenterY = backView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 25)
-                smallLeftAnchor = backView.leftAnchor.constraint(equalTo: self.rightAnchor, constant: 40)
-                smallRightAnchor = backView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -40)
+                originalSmallCenterY = backView.centerYAnchor.constraint(equalTo: self.centerYAnchor,
+                                                                         constant: 25)
+                smallLeftAnchor = backView.leftAnchor.constraint(equalTo: self.rightAnchor,
+                                                                 constant: 40)
+                smallRightAnchor = backView.rightAnchor.constraint(equalTo: self.rightAnchor,
+                                                                   constant: -40)
                 smallHeightAnchor = backView.heightAnchor.constraint(equalToConstant: 480)
                 NSLayoutConstraint.activate([
                     originalSmallCenterX,
@@ -174,17 +174,36 @@ class OnboardingView: UIView {
         }
     }
     
+    //MARK: Button actions
+    
+    @objc func iniziaButtonTapped() {
+        if self.stack.storage.count > 1 {
+            UIView.animate(withDuration: 0.1, animations: {
+                guard let frontView = self.frontView else { return }
+                frontView.center.x = -(frontView.frame.width / 2)
+            }) { _ in
+                self.frontView?.removeFromSuperview()
+                self.stack.pop()
+                self.deactivateConstraints()
+                self.setupLayout()
+                self.iniziaButton.setTitle("ACCETTA", for: .normal)
+                self.iniziaButton.setTitleColor(.orange, for: .normal)
+                self.rifiutaButton.isHidden = false
+            }
+        }
+    }
+    
     private func configureViews() {
-        print(UIFont.familyNames)
-            cardData.reversed().forEach { data in
-                stack.push(createView(with: data))
-                if let cardView = cardViews {
-                    for card in cardView {
-                        card.cardData = data
-                    }
+        cardData.reversed().forEach { data in
+            stack.push(createView(with: data))
+            if let cardView = cardViews {
+                for card in cardView {
+                    card.cardData = data
+                    card.isHidden = true
                 }
             }
         }
+    }
     
     private func createView(with data: OnboardingModel) -> CardView {
         let view = CardView()
@@ -211,48 +230,39 @@ class OnboardingView: UIView {
     }
     
     
-    @objc private func swipeHandle(_ gesture: UIPanGestureRecognizer) {
+    @objc func swipeHandle(_ gesture: UIPanGestureRecognizer) {
         guard let frontView = self.frontView else { return }
         guard let view = gesture.view else { return }
         
         let translation = gesture.translation(in: view)
         
         switch gesture.state {
-        case .began:
-            if translation.x < 0 {
-                let newX = originalBigCenterX.constant + translation.x
-                frontView.center.x = newX
-            }
         case .changed:
             if translation.x < 0 {
                 let newX = originalBigCenterX.constant + translation.x
                 frontView.center.x = newX
             }
         case .ended:
-            if translation.x < -50 {
-                UIView.animate(withDuration: 0.1, animations: {
-                    guard let frontView = self.frontView else { return }
-                    frontView.center.x = -(frontView.frame.width / 2)
-                }) { _ in
-                    frontView.removeFromSuperview()
-                    self.stack.pop()
-                    self.deactivateConstraints()
-                    self.setupLayout()
-                    
-                }
-            } else {
-                UIView.animate(withDuration: 0.1) {
-                    frontView.center.x = self.center.x
+            UIView.animate(withDuration: 0.1, animations: {
+                guard let frontView = self.frontView else { return }
+                frontView.center.x = -(frontView.frame.width / 2)
+            }) { _ in
+                frontView.removeFromSuperview()
+                self.stack.pop()
+                self.deactivateConstraints()
+                self.setupLayout()
+                self.iniziaButton.setTitle("ACCETTA", for: .normal)
+                self.iniziaButton.setTitleColor(.orange, for: .normal)
+                self.rifiutaButton.isHidden = false
+                
+                if self.stack.storage.count == 0 {
+                    if let last = self.onLastCard {
+                        last()
+                    }
                 }
             }
         default:
             break
         }
-    }
-    
-    
-    func getCards(model: [OnboardingModel]) -> [CardView] {
-        model.map { CardView(cardData: $0) }
-        
     }
 }
